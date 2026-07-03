@@ -9,21 +9,50 @@ import {
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
-
-interface LoginInputs {
-  username: string;
-  password: string;
-}
+import { loginSchema, type LoginSchema } from "@/schema/auth/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { loginUser } from "@/api/auth.api";
+import { toast } from "sonner";
+import { setAccessToken, setRefreshToken } from "@/utils/localStorage";
 
 export default function LoginPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInputs>();
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      identifier: "",
+      password: "",
+    },
+  });
 
-  const onSubmit = (data: LoginInputs) => {
-    console.log(data);
+
+    const [showPassword, setShowPassword] = useState(false);
+  
+  const onSubmit = async (data: LoginSchema) => {
+    try {
+      const response = await loginUser({
+        username: data.identifier,
+        password: data.password,
+      });
+
+      toast.success(response.message);
+
+    setAccessToken(response.data.accessToken);
+    setRefreshToken(response.data.accessToken);
+
+// console.log(response.data.accessToken);
+// console.log(response.data.refreshToken);
+// console.log(response.data.user);
+
+      // navigate("/dashboard");
+    } catch (error) {
+      toast.error("Invalid username or password");
+    }
   };
 
   return (
@@ -40,24 +69,25 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="username">Username / Email</FieldLabel>
+              <FieldLabel htmlFor="username">
+                {" "}
+                Email / Username / Mobile
+              </FieldLabel>
 
               <Input
-                id="username"
+                id="identifier"
                 type="text"
-                placeholder="Enter your username or email"
-                {...register("username", {
-                  required: "Username or Email is required",
-                })}
+                placeholder="Enter your username or email or MobileNo"
+                {...register("identifier")}
               />
 
               <FieldDescription>
                 Enter your registered username or email.
               </FieldDescription>
 
-              {errors.username && (
+              {errors.identifier && (
                 <p className="text-sm text-red-500">
-                  {errors.username.message}
+                  {errors.identifier.message}
                 </p>
               )}
             </Field>
@@ -65,18 +95,25 @@ export default function LoginPage() {
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
 
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters",
-                  },
-                })}
-              />
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
+                  className="pr-10"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
 
               <FieldDescription>Enter your account password.</FieldDescription>
 
@@ -86,6 +123,14 @@ export default function LoginPage() {
                 </p>
               )}
             </Field>
+            <div className="flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Forgot Password?
+              </Link>
+            </div>
 
             <Button className="w-full" type="submit">
               Login
