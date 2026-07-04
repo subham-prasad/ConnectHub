@@ -1,3 +1,5 @@
+import UserStore from "@/store/user.store";
+import type { User } from "@/types/user.types";
 import { PLATFORM_NAME } from "@/utils/global";
 import { LOGO } from "@/utils/global-assets";
 import { Link, NavLink } from "react-router";
@@ -14,6 +16,8 @@ const navItems = [
 ];
 
 function Header() {
+  const loggedInUser = UserStore((store) => store.user);
+
   return (
     <header className="border-b bg-white shadow-sm">
       <div className="mx-auto flex h-16 w-4/5 items-center justify-between">
@@ -51,25 +55,42 @@ function Header() {
 
         {/* Authentication */}
         <div className="flex items-center gap-4">
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              `font-medium transition-colors ${
-                isActive
-                  ? "text-blue-600"
-                  : "text-gray-600 hover:text-blue-600"
-              }`
-            }
-          >
-            Login
-          </NavLink>
+          {loggedInUser ? (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `font-medium transition-colors ${
+                  isActive
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
+                }`
+              }
+            >
+              LogOut
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `font-medium transition-colors ${
+                  isActive
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-blue-600"
+                }`
+              }
+            >
+              Login
+            </NavLink>
+          )}
 
-          <Link
-            to="/register"
-            className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
-          >
-            Register
-          </Link>
+          {!loggedInUser && (
+            <Link
+              to="/register"
+              className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
+            >
+              Register
+            </Link>
+          )}
         </div>
       </div>
     </header>

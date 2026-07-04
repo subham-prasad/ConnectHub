@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
   registrationSchema,
   type RegistrationForm,
@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { registerUser } from "@/api/auth.api";
-
+import { toast } from "sonner";
 
 // type Inputs = z.infer<typeof registrationSchema>;
 
@@ -39,14 +39,20 @@ export const RegistrationPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const watchFirstName = watch("firstName");
 
-  const onSubmit = async (data: RegistrationForm) => {
+  const navigate = useNavigate();
 
+  const onSubmit = async (data: RegistrationForm) => {
     const RegisteredUser = await registerUser({
       username: `${data.firstName}${data.lastName}`,
       email: data.username,
       password: data.password,
       role: "ADMIN",
     });
+
+    if (RegisteredUser.success) {
+      toast.success(RegisteredUser.message);
+      navigate("/login");
+    } else toast.error(RegisteredUser.message);
 
     // const username = registeredUser?.data.data.name;
 

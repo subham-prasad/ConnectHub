@@ -1,37 +1,8 @@
 import Axios from "@/lib/axios";
 import { type ApiResponse } from "@/types/global-types";
-import { toast } from "sonner";
+import type { LoginUserResponse, User } from "@/types/user.types";
 
-interface RegisterUser {
-  __v: number;
-  _id: string;
-  email: string;
-  password: string;
-  role: string;
-  avatar: {
-    _id: string;
-    localPath: string;
-    url: string;
-  };
-  createdAt: string;
-  isEmailVerified: boolean;
-  loginType: string;
-  updatedAt: string;
-  username: string;
-}
-
-interface LoginUser {
-  accessToken: string;
-  refreshToken: string;
-  user: RegisterUser;
-}
-
-// interface UserRegistrationRes {
-//   data: User;
-//   statusCode: number;
-//   success: boolean;
-//   message: string;
-// }
+import { setAccessToken, setRefreshToken } from "@/utils/localStorage";
 
 export interface RegisteredUserInternface {
   email: string;
@@ -47,7 +18,7 @@ export interface LoginUserInternface {
 
 export const registerUser = async (userData: RegisteredUserInternface) => {
   try {
-    const response = await Axios.post<ApiResponse<RegisterUser>>(
+    const response = await Axios.post<ApiResponse<User>>(
       "/users/register",
       userData,
     );
@@ -61,15 +32,16 @@ export const registerUser = async (userData: RegisteredUserInternface) => {
 
 export const loginUser = async (userData: LoginUserInternface) => {
   try {
-    const response = await Axios.post<ApiResponse<LoginUser>>(
+    const response = await Axios.post<ApiResponse<LoginUserResponse>>(
       "/users/login",
       userData,
     );
 
+    setAccessToken(response.data.data.accessToken);
+    setRefreshToken(response.data.data.accessToken);
+
     return response.data;
   } catch (error: any) {
-    toast.error("Invalid username or password");
-
     console.log(error);
     throw error;
   }
@@ -77,14 +49,10 @@ export const loginUser = async (userData: LoginUserInternface) => {
 
 export const getCurrentUser = async () => {
   try {
-    const response = await Axios.get<ApiResponse<RegisterUser>>(
-      "/users/current-users",
-    );
-
+    const response = await Axios.get<ApiResponse<User>>("/users/current-user");
+    console.log("check pro or not", response);
     return response.data;
   } catch (error) {
-    toast.error("Invalid username or password");
-
     console.log(error);
     throw error;
   }

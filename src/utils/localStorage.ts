@@ -10,8 +10,8 @@ export const setAccessToken = (token: string): void => {
   localStorage.setItem(ACCESS_TOKEN_KEY, token);
 };
 
-export const getAccessToken = (): string | null => {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+export const getAccessToken = (): string  => {
+  return localStorage.getItem(ACCESS_TOKEN_KEY) ?? '';
 };
 
 export const removeAccessToken = (): void => {
@@ -27,7 +27,7 @@ export const setRefreshToken = (token: string): void => {
 };
 
 export const getRefreshToken = (): string | null => {
-  return localStorage.getItem(REFRESH_TOKEN_KEY);
+  return localStorage.getItem(REFRESH_TOKEN_KEY) ?? "";
 };
 
 export const removeRefreshToken = (): void => {

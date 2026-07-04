@@ -7,7 +7,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { loginSchema, type LoginSchema } from "@/schema/auth/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,9 +30,10 @@ export default function LoginPage() {
     },
   });
 
+  const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = useState(false);
-  
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit = async (data: LoginSchema) => {
     try {
       const response = await loginUser({
@@ -42,12 +43,11 @@ export default function LoginPage() {
 
       toast.success(response.message);
 
-    setAccessToken(response.data.accessToken);
-    setRefreshToken(response.data.accessToken);
+      navigate("/")
 
-// console.log(response.data.accessToken);
-// console.log(response.data.refreshToken);
-// console.log(response.data.user);
+      // console.log(response.data.accessToken);
+      // console.log(response.data.refreshToken);
+      // console.log(response.data.user);
 
       // navigate("/dashboard");
     } catch (error) {
