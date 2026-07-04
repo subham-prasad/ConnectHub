@@ -15,5 +15,3 @@ const Axios: AxiosInstance = axios.create({
 export default Axios;
 
 
-git config --global user.name "Subham Prasad"
-git config --global user.email "shubhamprasad2000@gmail.com"
