@@ -15,9 +15,9 @@ function RootLayout() {
 
   return (
     <div className="h-screen w-screen">
-      <Header />
+      <Header  />
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

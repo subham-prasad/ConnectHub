@@ -16,7 +16,11 @@ const navItems = [
 ];
 
 function Header() {
-  const loggedInUser = UserStore((store) => store.user);
+
+
+  const loggedInUser = UserStore((store) =>  store.user)
+
+  
 
   return (
     <header className="border-b bg-white shadow-sm">
@@ -83,14 +87,13 @@ function Header() {
             </NavLink>
           )}
 
-          {!loggedInUser && (
-            <Link
-              to="/register"
-              className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
-            >
-              Register
-            </Link>
-          )}
+       {!loggedInUser &&   <Link
+            to="/register"
+            className="rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
+          >
+            Register
+          </Link>
+}
         </div>
       </div>
     </header>
