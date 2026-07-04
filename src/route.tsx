@@ -5,13 +5,14 @@ import { RegistrationPage } from "@/components/custom/authentication/registratio
 import Profile from "@/components/custom/proflie/profile";
 import { Home } from "lucide-react";
 import { createBrowserRouter } from "react-router";
+import HomeComponent from "./components/custom/home/home";
 
 const Router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "/", element: <HomeComponent /> },
       {
         path: "profile",
         element: <Profile />,
