@@ -1,22 +1,29 @@
-import { getCurrentUser } from "@/api/auth.api";
-import type { User } from "@/types/user.types";
+import { getAllPostsData } from "@/api/post.api";
+
+import type { Post, PostApiResponse } from "@/types/post.types";
 import { create } from "zustand";
 
-interface UserStoreInterface {
-  user: User | null;
-  getCurrentUser: () => void
+interface PostsStoreInterface {
+  postData: PostApiResponse | null;
+  getAllPosts: () => Promise<void>;
 }
 
-const UserStore =
-  create <UserStoreInterface>((set) => ({
-    
-      user: null,
+const PostsStore = create<PostsStoreInterface>((set) => ({
+  postData: null,
+  getAllPosts: async () => {
+    const allPosts = await getAllPostsData();
 
-      getCurrentUser: async () => {
-        const currentUser = await getCurrentUser();
-        set(() => ({ user: currentUser.data }));
-      },
-    
-  }));
+    console.log(allPosts)
+    set(() => ({ postData: allPosts.data }));
+  },
+}));
 
-export default UserStore
+export default PostsStore;
+
+
+/*
+ getAllPosts: () => {
+    set({
+      posts: dummyPosts,
+    });
+*/

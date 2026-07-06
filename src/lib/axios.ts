@@ -5,7 +5,7 @@ const accessToken: string = getAccessToken();
 const Axios: AxiosInstance = axios.create({
   // baseURL: process.env.BACKEND_BASE_URL,
   baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
-  timeout: 1000,
+  timeout: 30000,
   headers: {
     "Content-Type": "application/json",
     Authorization: accessToken ? `Bearer ${accessToken}` : "",

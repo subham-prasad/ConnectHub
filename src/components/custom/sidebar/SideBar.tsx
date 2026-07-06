@@ -1,13 +1,16 @@
 import { Bell, HomeIcon, SquarePlusIcon } from 'lucide-react';
 import React from 'react'
+import { Link } from 'react-router';
 
 const SideBar = () => {
   return (
     <div className="mx-auto px-2 py-10 flex flex-col w-1/8 ">
-      <div className="flex flex-row p-4 ">
+      <Link 
+      to={'/'}
+      className="flex flex-row p-4 ">
         <HomeIcon />
         <h1 className="font-semibold pl-2">Home</h1>
-      </div>
+      </Link>
 
       <div className="flex flex-row p-4 ">
         <SquarePlusIcon />

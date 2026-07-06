@@ -1,25 +1,29 @@
-import React from "react";
+import type { Post } from "@/types/post.types";
 import PostCard from "./PostCard";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { dummyPosts } from "@/components/dummy/dummyCard";
+
+import PostsStore from "@/store/post.store";
+import { useEffect } from "react";
 
 const AllPosts = () => {
+  // const getAllPosts: Post = PostsStore((state) => {state.posts})
+
+  const posts = PostsStore((state) => state.postData);
+  const getAllPosts = PostsStore((state) => state.getAllPosts);
+
+  useEffect(() => {
+    getAllPosts();
+  }, [getAllPosts]);
+
+
+
   return (
     <div className="flex-1 overflow-y-auto ">
-      {/* <PostCard
-        post={{
-          userName: "Subonda",
-          likes: "0",
-          comments: "0",
-          shares: "0",
-          saves: "0",
-        }}
-      />
-      <PostCard post={DummyPostCardsData[0]} />
-       */}
-      {dummyPosts &&
-        dummyPosts.map((post) => {
-          return <PostCard key={post.id} post={post} />;
+     
+      {/* <PostCard post={DummyPostCardsData[0]} /> */}
+      
+      {posts &&
+        posts.posts.map((post) => {
+          return <PostCard key={post._id} post={post} />;
         })}
     </div>
   );

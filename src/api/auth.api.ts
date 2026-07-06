@@ -50,7 +50,7 @@ export const loginUser = async (userData: LoginUserInternface) => {
 export const getCurrentUser = async () => {
   try {
     const response = await Axios.get<ApiResponse<User>>("/users/current-user");
-    console.log("check pro or not", response);
+    // console.log("check pro or not", response);
     return response.data;
   } catch (error) {
     console.log(error);
