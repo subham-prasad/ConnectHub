@@ -1,28 +1,53 @@
-import { Bell, HomeIcon, SquarePlusIcon } from 'lucide-react';
-import React from 'react'
-import { Link } from 'react-router';
+
+import { Bell, HomeIcon, SquarePlusIcon, MessageCircle } from "lucide-react";
+import { Link } from "react-router";
+
+const sidebarItems = [
+  {
+    title: "Home",
+    path: "/",
+    icon: HomeIcon,
+  },
+  {
+    title: "New Post",
+    path: "/newpost",
+    icon: SquarePlusIcon,
+  },
+  {
+    title: "Notifications",
+    path: "/notifications",
+    icon: Bell,
+  },
+  {
+    title: "Messages",
+    path: "/messages",
+    icon: MessageCircle,
+  },
+];
+
 
 const SideBar = () => {
   return (
-    <div className="mx-auto px-2 py-10 flex flex-col w-1/8 ">
-      <Link 
-      to={'/'}
-      className="flex flex-row p-4 ">
-        <HomeIcon />
-        <h1 className="font-semibold pl-2">Home</h1>
-      </Link>
+    <div className="w-64 flex-shrink-0 px-2 py-10">
+      {sidebarItems.map((item) => {
+        const Icon = item.icon;
 
-      <div className="flex flex-row p-4 ">
-        <SquarePlusIcon />
-        <h1 className="font-semibold pl-2">New Post</h1>
-      </div>
+        return (
+          <Link
+            key={item.path}
+            to={item.path}
+            className="flex items-center p-4"
+          >
+            <Icon />
+            <h1 className="font-semibold pl-2">{item.title}</h1>
+          </Link>
+        );
+      })}
 
-      <div className="flex flex-row p-4">
-        <Bell />
-        <h1 className="font-semibold pl-2">Notifications</h1>
-      </div>
+      
     </div>
   );
-}
+};
 
 export default SideBar
+

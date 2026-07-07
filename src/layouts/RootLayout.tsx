@@ -11,11 +11,11 @@ function RootLayout() {
   useEffect(() => {
 
     getCurrentUser();
-  });
+  },[]);
 
   return (
-    <div className="h-screen w-screen">
-      <Header  />
+    <div className="min-h-screen w-full">
+      <Header />
       <Outlet />
       {/* <Footer /> */}
     </div>

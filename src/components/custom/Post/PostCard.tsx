@@ -31,7 +31,7 @@ useEffect(() => {
   });
 }, [api]);
   return (
-    <div className=" w-7/8 ">
+    <div className="flex justify-center ">
       <div className="profile-card mx-auto my-6 w-[600px] rounded-lg p-4 ">
         <div className="post-card-top flex flex-row h-1/12 justify-between align-middle pt-2 ">
           <div className="post-card-logoandusername flex flex-row px-2">
@@ -81,6 +81,9 @@ useEffect(() => {
             ))}
           </div>
         </div>
+
+
+        
         <div className="mt-2 text-sm">
           <p className={expanded ? "" : "line-clamp-2"}>
             {post.content}

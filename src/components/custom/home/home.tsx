@@ -6,10 +6,11 @@ import PostCard from "../Post/PostCard";
 
 function HomeComponent() {
   return (
-    <div className="flex flex-row h-full w-full ">
-     
-        <SideBar />
+    <div className="flex ">
+      <SideBar />
+      <main className="flex-1 min-w-0 overflow-y-auto">
         <AllPosts />
+      </main>
 
     </div>
   );

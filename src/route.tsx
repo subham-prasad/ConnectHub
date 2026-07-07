@@ -6,6 +6,7 @@ import Profile from "@/components/custom/proflie/profile";
 import { Home } from "lucide-react";
 import { createBrowserRouter } from "react-router";
 import HomeComponent from "./components/custom/home/home";
+import NewPosts from "./components/custom/Post/NewPosts";
 
 const Router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const Router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "newpost",
+        element: <NewPosts />,
       },
     ],
   },

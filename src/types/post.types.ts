@@ -60,3 +60,8 @@ export interface PostApiResponse {
   prevPage?: number | null;
   nextPage?: number | null;
 }
+
+export type UploadedImage = {
+  file: File;
+  preview: string;
+};
