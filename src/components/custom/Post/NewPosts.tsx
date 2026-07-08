@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../sidebar/SideBar";
-import { Image, ImagePlus } from "lucide-react";
+import { Image, ImagePlus, Loader2 } from "lucide-react";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 
 import ImageEditorDialogue from "./ImageEditorDialogue";
 import type { UploadedImage } from "@/types/post.types";
+import { Button } from "@/components/ui/button";
+import { createPost } from "@/api/post.api";
+import { toast } from "sonner";
+import { MAX_CONTENT_LENGTH } from "@/utils/global-assets";
+import { useNavigate } from "react-router";
 
 const NewPosts = () => {
   const [content, setContent] = useState("");
   const [images, setImages] = useState<UploadedImage[]>([]);
+  const navigate = useNavigate();
 
   const [tagInput, setTagInput] = useState("");
 
   const [tags, setTags] = useState<string[]>([]);
+  const [isPosting, setIsPosting] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState<{
     file: File;
@@ -65,6 +72,40 @@ const NewPosts = () => {
       addTag();
     }
   };
+  const handlePost = async () => {
+ if (!content.trim() && images.length === 0) {
+   toast.error("Please enter a caption or upload at least one image.");
+   return;
+ }
+    try {
+      setIsPosting(true);
+      const response = await createPost({
+        content,
+        images,
+        tags,
+      });
+      toast.success("Post uploaded successfully!");
+
+      images.forEach((image) => {
+        URL.revokeObjectURL(image.preview);
+      });
+
+      setImages([]);
+
+      setContent("");
+      setImages([]);
+      setTagInput("");
+      setTags([]);
+      // console.log(response);
+
+        navigate("/"); 
+    } catch (error) {
+      toast.error("Failed to upload post.");
+      console.error(error);
+    } finally {
+      setIsPosting(false);
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -89,11 +130,16 @@ const NewPosts = () => {
               <textarea
                 value={content}
                 onChange={(e) => {
-                  setContent(e.target.value);
+                  if (e.target.value.length <= MAX_CONTENT_LENGTH) {
+                    setContent(e.target.value);
+                  }
                 }}
                 placeholder="Enter the Caption Here"
                 className="min-h-32 w-full resize-none rounded-lg border p-3"
               />
+              <div className="mt-1 text-right text-sm text-gray-500">
+                {content.length} / {MAX_CONTENT_LENGTH}
+              </div>
             </Field>
             <Field>
               <FieldLabel className="mb-2">Upload Images</FieldLabel>
@@ -241,6 +287,18 @@ const NewPosts = () => {
                 </div>
               </div>
             </Field>
+            <div className="mt-6 flex justify-end">
+              <Button onClick={handlePost} disabled={isPosting}>
+                {isPosting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Posting...
+                  </>
+                ) : (
+                  "Post"
+                )}
+              </Button>
+            </div>
           </FieldGroup>
         </div>
       </div>

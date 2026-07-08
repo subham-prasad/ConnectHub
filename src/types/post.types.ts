@@ -1,20 +1,11 @@
+import type { account, image } from "./global-types";
 
 
 
-interface image {
-  url: string;
-  localPath: string;
-  _id: string
-}
 
 
 
-interface account {
-  _id: string;
-  avatar: image;
-  username: string;
-  email: string;
-}
+
 
 interface author {
   _id: string;
@@ -30,7 +21,7 @@ interface author {
   createdAt: string;
   updatedAt: string;
   __v: string;
-  account: account;
+  account: Omit<account, "isEmailVerified">;
 }
 
 
@@ -65,3 +56,10 @@ export type UploadedImage = {
   file: File;
   preview: string;
 };
+
+
+export interface CreatePostPayload {
+  content: string;
+  images: UploadedImage[];
+  tags: string[];
+}

@@ -13,7 +13,7 @@ const PostsStore = create<PostsStoreInterface>((set) => ({
   getAllPosts: async () => {
     const allPosts = await getAllPostsData();
 
-    console.log(allPosts)
+    // console.log(allPosts)
     set(() => ({ postData: allPosts.data }));
   },
 }));

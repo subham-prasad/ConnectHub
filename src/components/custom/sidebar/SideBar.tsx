@@ -1,5 +1,5 @@
 
-import { Bell, HomeIcon, SquarePlusIcon, MessageCircle } from "lucide-react";
+import { Bell, HomeIcon, SquarePlusIcon, MessageCircle,User } from "lucide-react";
 import { Link } from "react-router";
 
 const sidebarItems = [
@@ -22,6 +22,11 @@ const sidebarItems = [
     title: "Messages",
     path: "/messages",
     icon: MessageCircle,
+  },
+  {
+    title: "Profile",
+    path: "/profile",
+    icon: User,
   },
 ];
 

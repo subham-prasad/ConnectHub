@@ -2,7 +2,7 @@ import RootLayout from "@/layouts/RootLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import LoginPage from "@/components/custom/authentication/login-form";
 import { RegistrationPage } from "@/components/custom/authentication/registration-form";
-import Profile from "@/components/custom/proflie/profile";
+import Profile from "@/components/custom/proflie/Profile";
 import { Home } from "lucide-react";
 import { createBrowserRouter } from "react-router";
 import HomeComponent from "./components/custom/home/home";
