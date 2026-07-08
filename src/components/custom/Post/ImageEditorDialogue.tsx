@@ -63,13 +63,9 @@ const ImageEditorDialogue = ({
       rotation,
     );
 
-      console.log("handleApply");
 
-    //   console.log(image);
 
-    //   console.log(croppedAreaPixels);
 
-    //   console.log(imageUrl);
 
     onApply(editedImage);
 

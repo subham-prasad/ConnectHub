@@ -42,9 +42,6 @@ export const createPost = async ({
     formData.append(`tags[${index}]`, tag);
   });
 
-  // for (const [key, value] of formData.entries()) {
-  //   console.log(key, ":", value);
-  // }
 
   try {
     const response = await Axios.post<ApiResponse<PostApiResponse>>(
@@ -57,7 +54,7 @@ export const createPost = async ({
       },
     );
 
-    // console.log(response.data)
+
 
     return response.data;
   } catch (error: any) {

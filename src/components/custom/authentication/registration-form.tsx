@@ -56,9 +56,7 @@ export const RegistrationPage = () => {
 
     // const username = registeredUser?.data.data.name;
 
-    console.log(RegisteredUser.message);
-    console.log(RegisteredUser.statusCode);
-    console.log(RegisteredUser.data);
+
   };
 
   return (

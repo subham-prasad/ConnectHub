@@ -40,7 +40,7 @@ const NewPosts = () => {
 
     e.target.value = "";
 
-    // console.log(e.target.files);
+
   };
 
   const removeImage = (index: number) => {
@@ -58,7 +58,7 @@ const NewPosts = () => {
       return;
     }
     setTags((prev) => [...prev, tag]);
-    console.log("tag added:", tag);
+
     setTagInput("");
   };
 
@@ -96,7 +96,7 @@ const NewPosts = () => {
       setImages([]);
       setTagInput("");
       setTags([]);
-      // console.log(response);
+
 
         navigate("/"); 
     } catch (error) {

@@ -15,7 +15,7 @@ const MyPostStore = create<myPostStoreInterface>((set) => ({
         const myAllPosts = await getMyPosts();
 
 
-        console.log(myAllPosts.data)
+
         set(() => ({ myPosts: myAllPosts.data }));
     }
 }))

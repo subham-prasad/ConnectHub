@@ -45,11 +45,8 @@ export default function LoginPage() {
 
       navigate("/")
 
-      // console.log(response.data.accessToken);
-      // console.log(response.data.refreshToken);
-      // console.log(response.data.user);
 
-      // navigate("/dashboard");
+
     } catch (error) {
       toast.error("Invalid username or password");
     }
