@@ -1,6 +1,7 @@
 import type { ApiResponse } from "@/types/global-types";
 import type {
   CreatePostPayload,
+  Post,
   PostApiResponse,
   UploadedImage,
 } from "@/types/post.types";
@@ -81,3 +82,17 @@ export const getMyPosts = async () => {
     throw error;
   }
 };
+
+
+export const getPostById = async (id: string) => {
+  
+  try {
+    const response = await Axios.get<ApiResponse<Post>>(
+      `social-media/posts/${id}`,
+    );
+
+    return response.data
+  } catch (error: any) {
+    throw(error)
+  }
+}

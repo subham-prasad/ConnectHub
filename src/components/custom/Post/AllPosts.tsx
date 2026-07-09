@@ -12,8 +12,10 @@ const AllPosts = () => {
 
   useEffect(() => {
     getAllPosts();
-  }, [getAllPosts]);
+    
 
+  
+  }, [getAllPosts]);
 
 
   return (

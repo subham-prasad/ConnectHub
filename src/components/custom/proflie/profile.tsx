@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import SideBar from "../sidebar/SideBar";
 import MyPostStore from "@/store/mypost.store";
 import ProfileStore from "@/store/profile.store";
+import SmallPostCard from "../Post/SmallPostCard";
 import myPic from "@/assets/MyPic.jpeg";
-import {  Heart, MessageCircle } from "lucide-react";
+import PostModal from "../PostModal/PostModal";
+6
+
 
 const Profile = () => {
   const myPosts = MyPostStore((state) => state.myPosts);
@@ -16,13 +19,13 @@ const Profile = () => {
   useEffect(() => {
     getMyPosts();
 
-    console.log("myposts:", myPosts);
+
   }, [getMyPosts]);
 
   useEffect(() => {
     getMyProfile();
 
-    console.log("myProfile: ", myProfile);
+
   }, [getMyProfile]);
 
   return (
@@ -64,34 +67,11 @@ const Profile = () => {
         <div className=" grid grid-cols-3 p-3 ">
           {(myPosts?.posts?.length ?? 0) > 0 &&
             myPosts?.posts.map((post, id) => (
-              <div
-                key={post._id}
-                className="w-72 h-72  p-2 relative group rounded-2xl"
-              >
-                <img
-                  className="w-full h-full object-cover"
-                  src={myPic}
-                  alt={`Image ${id + 1}`}
-                />
-                <div
-                  className="absolute inset-2   bg-black/50   opacity-0   group-hover:opacity-100 transition-all  duration-300   flex
-                items-center
-                justify-center   gap-6
-                text-white"
-                >
-                  <div className="flex flex-row">
-                    <span>{`${post.likes}`}</span>
-                    <Heart fill="white" className="pl-1" />
-                  </div>
-                  <div className="flex flex-row">
-                    <span>{`${post.comments}`}</span>
-                    <MessageCircle fill="white" className="pl-1" />
-                  </div>
-                </div>
-              </div>
+              <SmallPostCard post={post} id={id} />
             ))}
         </div>
       </div>
+
     </div>
   );
 };
