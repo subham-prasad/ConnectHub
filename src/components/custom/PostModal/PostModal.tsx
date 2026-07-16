@@ -18,7 +18,7 @@ import {
 
 
 const PostModal = ({ post }: { post: Post }) => {
-  const [selectedPost, setSelectedPost] = useState(null);
+
 
   
 

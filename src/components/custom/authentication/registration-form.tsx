@@ -29,25 +29,38 @@ export const RegistrationPage = () => {
     formState: { errors },
   } = useForm<RegistrationForm>({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      username: "",
+      userName: "",
+      fullName: "",
       password: "",
+      email: "",
+      bio: "",
     },
     resolver: zodResolver(registrationSchema),
   });
   const [showPassword, setShowPassword] = useState(false);
-  const watchFirstName = watch("firstName");
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const watchFirstName = watch("fullName");
 
   const navigate = useNavigate();
 
   const onSubmit = async (data: RegistrationForm) => {
-    const RegisteredUser = await registerUser({
-      username: `${data.firstName}${data.lastName}`,
-      email: data.username,
-      password: data.password,
-      role: "ADMIN",
-    });
+    const formData = new FormData();
+
+    // console.log("user")
+
+    formData.append("userName", data.userName);
+    formData.append("fullName", data.fullName);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    if (data.bio) {
+      formData.append("bio", data.bio);
+    }
+
+    if (avatar) {
+      formData.append("avatar", avatar);
+    }
+    const RegisteredUser = await registerUser(formData);
 
     if (RegisteredUser.success) {
       toast.success(RegisteredUser.message);
@@ -55,8 +68,6 @@ export const RegistrationPage = () => {
     } else toast.error(RegisteredUser.message);
 
     // const username = registeredUser?.data.data.name;
-
-
   };
 
   return (
@@ -73,48 +84,46 @@ export const RegistrationPage = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <FieldGroup>
             <Field>
-              <FieldLabel>First Name</FieldLabel>
+              <FieldLabel>Full Name</FieldLabel>
 
-              <Input {...register("firstName")} />
+              <Input {...register("fullName")} />
 
               <FieldDescription>
                 {watchFirstName || "Enter your first name"}
               </FieldDescription>
 
-              {errors.firstName && (
+              {errors.fullName && (
                 <p className="text-sm text-red-500">
-                  {errors.firstName.message}
+                  {errors.fullName.message}
                 </p>
               )}
             </Field>
 
             <Field>
-              <FieldLabel>Last Name</FieldLabel>
+              <FieldLabel>Username </FieldLabel>
 
-              <Input {...register("lastName")} />
-
-              {errors.lastName && (
-                <p className="text-sm text-red-500">
-                  {errors.lastName.message}
-                </p>
-              )}
-            </Field>
-
-            <Field>
-              <FieldLabel>Username / Email</FieldLabel>
-
-              <Input type="text" {...register("username")} />
+              <Input type="text" {...register("userName")} />
 
               <FieldDescription>We'll never share your email.</FieldDescription>
 
-              {errors.username && (
+              {errors.userName && (
                 <p className="text-sm text-red-500">
-                  {errors.username.message}
+                  {errors.userName.message}
                 </p>
               )}
             </Field>
 
             <Field>
+              <FieldLabel>Email </FieldLabel>
+
+              <Input type="email" {...register("email")} />
+
+              <FieldDescription>We'll never share your email.</FieldDescription>
+
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email.message}</p>
+              )}
+
               <FieldLabel>Password</FieldLabel>
 
               <div className="relative">
@@ -140,6 +149,23 @@ export const RegistrationPage = () => {
               {errors.password && (
                 <p className="text-sm text-red-500">
                   {errors.password.message}
+                </p>
+              )}
+            </Field>
+
+            <Field>
+              <FieldLabel>Profile Picture</FieldLabel>
+
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  setAvatar(e.target.files?.[0] ?? null);
+                }}
+              />
+              {avatar && (
+                <p className="text-sm text-slate-500">
+                  Selected: {avatar.name}
                 </p>
               )}
             </Field>

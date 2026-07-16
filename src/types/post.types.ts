@@ -10,7 +10,7 @@ import type { account, image } from "./global-types";
 interface author {
   _id: string;
   coverImage: image;
-  firstName: string;
+  fullName: string;
   lastName: string;
   bio: string;
   dob: string;

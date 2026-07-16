@@ -6,18 +6,43 @@ import { create } from "zustand";
 interface PostsStoreInterface {
   postData: PostApiResponse | null;
   postById: Post | null;
-  getAllPosts: () => Promise<void>;
+  currentPage: number;
+  limit: number;
+  loading: boolean;
+  getAllPosts: (page?: number, limit?: number) => Promise<void>;
   callPostById: (id: string) => Promise<Post>;
 }
 
 const PostsStore = create<PostsStoreInterface>((set) => ({
   postData: null,
   postById: null,
+  currentPage: 1,
+  limit: 20,
+  loading: false,
 
-  getAllPosts: async () => {
-    const allPosts = await getAllPostsData();
+  getAllPosts: async (page = 1, limit = 20) => {
+    set({ loading: true });
 
-    set(() => ({ postData: allPosts.data }));
+    try {
+      const allPosts = await getAllPostsData(page, limit);
+
+      set((state) => ({
+        currentPage: page,
+        limit: limit,
+
+        postData:
+          page === 1 || !state.postData
+            ? allPosts.data
+            : {
+                ...allPosts.data,
+                posts: [...state.postData.posts, ...allPosts.data.posts],
+              },
+      }));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ loading: false });
+    }
   },
 
   callPostById: async (id: string) => {

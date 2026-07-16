@@ -37,7 +37,8 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginSchema) => {
     try {
       const response = await loginUser({
-        username: data.identifier,
+        userName: data.identifier,
+        email: data.identifier,
         password: data.password,
       });
 
@@ -66,7 +67,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="username">
+              <FieldLabel htmlFor="userName">
                 {" "}
                 Email / Username / Mobile
               </FieldLabel>

@@ -3,22 +3,23 @@ export interface User {
   _id: string;
   email: string;
   password: string;
-  role: UserRole;
-  avatar: Avatar;
+  avatar: string;
   createdAt: string;
-  isEmailVerified: boolean;
   loginType: string;
   updatedAt: string;
-  username: string;
+  userName: string;
+  followers: Array<number>;
+  following: Array<number>;
+  post: Array<number>;
 }
 
-interface Avatar {
-  _id: string;
-  localPath: string;
-  url: string;
-}
+// interface Avatar {
+//   _id: string;
+//   localPath: string;
+//   url: string;
+// }
 
-type UserRole = "ADMIN" | "USER";
+
 
 
 export interface LoginUserResponse {

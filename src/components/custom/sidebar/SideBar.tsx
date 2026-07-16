@@ -42,7 +42,7 @@ const SideBar = () => {
             to={item.path}
             className="flex items-center rounded-lg p-4 hover:bg-gray-100"
           >
-            <Icon />
+            <Icon className="transition-colors duration-200 group-hover:text-blue-600" />
             <span className="pl-2 font-semibold">{item.title}</span>
           </Link>
         );

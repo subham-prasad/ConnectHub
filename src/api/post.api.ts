@@ -7,14 +7,18 @@ import type {
 } from "@/types/post.types";
 import Axios from "@/lib/axios";
 
-export const getAllPostsData = async () => {
+export const getAllPostsData = async (
+
+  page: number=1,
+  limit: number=20
+) => {
   try {
     const response = await Axios.get<ApiResponse<PostApiResponse>>(
       "/social-media/posts",
       {
         params: {
-          page: 1,
-          limit: 20,
+          page,
+          limit,
         },
       },
     );
