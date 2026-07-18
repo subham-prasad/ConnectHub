@@ -1,4 +1,4 @@
-import type { account, image } from "./global-types";
+import type { account, asset, image } from "./global-types";
 
 
 
@@ -7,17 +7,19 @@ import type { account, image } from "./global-types";
 
 
 
-interface author {
+interface owner {
   _id: string;
   coverImage: image;
   fullName: string;
   lastName: string;
+  userName: string;
   bio: string;
-  dob: string;
-  location: string;
-  countryCode: string;
-  phoneNumber: string;
-  owner: string;
+  avatar: string;
+  // dob: string;
+  // location: string;
+  // countryCode: string;
+  // phoneNumber: string;
+  // owner: string;
   createdAt: string;
   updatedAt: string;
   __v: string;
@@ -27,10 +29,10 @@ interface author {
 
 export interface Post {
   _id: string;
-  content: string;
-  tags: string[];
-  images: image[];
-  author: author;
+  captions: string;
+  hashtags: string[];
+  asset: asset[];
+  owner: owner;
   createdAt: string;
   updatedAt: string;
   comments: number;

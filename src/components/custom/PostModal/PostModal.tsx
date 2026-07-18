@@ -5,8 +5,8 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import type { Post } from "@/types/post.types";
-import React, { useState } from "react";
-import myPic from "@/assets/MyPic.jpeg";
+// import React, { useState } from "react";
+// import myPic from "@/assets/MyPic.jpeg";
 import { Heart, MessageCircleMore } from "lucide-react";
 import {
   Carousel,
@@ -29,7 +29,7 @@ const PostModal = ({ post }: { post: Post }) => {
 
         <Carousel className="h-full aspect-12/16">
           <CarouselContent className="h-full">
-            {post.images.map((image) => (
+            {post.asset.map((image) => (
               <CarouselItem key={image._id} className="basis-full h-full">
                 <img className="w-full h-full object-cover" src={image.url} />
               </CarouselItem>
@@ -43,20 +43,16 @@ const PostModal = ({ post }: { post: Post }) => {
         {/* Post description */}
         <div className="w-full flex flex-col">
           <DialogHeader className="w-full  flex flex-col justify-center items-center  ">
-            <h1 className="text-3xl font-bold text-black">{`${post.author.account.username}`}</h1>
-            <span>
-              {post.author.firstName} {post.author.lastName}
-            </span>
+            <h1 className="text-3xl font-bold text-black">{`${post.owner.userName}`}</h1>
+            <span>{post.owner.fullName}</span>
           </DialogHeader>
           <div>
             <h3 className="text-xl">
-              <span className="text-black">
-                {post.author.account.username}:
-              </span>{" "}
-              {post?.content}
+              <span className="text-black">{post.owner.account.username}:</span>{" "}
+              {post?.captions}
             </h3>
             <span className="text-blue-500 cursor-pointer mx-2">
-              {post?.tags}
+              {post?.hashtags}
             </span>
           </div>
 

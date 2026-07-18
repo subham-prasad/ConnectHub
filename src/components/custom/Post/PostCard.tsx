@@ -8,7 +8,14 @@ import {
 } from "lucide-react";
 
 import type { Post } from "@/types/post.types";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 
 interface PostCardProds {
@@ -16,31 +23,32 @@ interface PostCardProds {
 }
 
 const PostCard = ({ post }: PostCardProds) => {
-
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [expanded, setExpanded] = useState(false);
 
-useEffect(() => {
-  if (!api) return;
+  // console.log("This is the post:",post)
 
-  setCurrent(api.selectedScrollSnap());
+  useEffect(() => {
+    if (!api) return;
 
-  api.on("select", () => {
     setCurrent(api.selectedScrollSnap());
-  });
-}, [api]);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
   return (
     <div className="flex justify-center ">
       <div className="profile-card mx-auto my-6 w-[600px] rounded-lg p-4 ">
         <div className="post-card-top flex flex-row h-1/12 justify-between align-middle pt-2 ">
           <div className="post-card-logoandusername flex flex-row px-2">
             <img
-              className="post-card-logo p-1 border-2 border-blue-300 rounded-full"
-              src={post?.author?.account?.avatar?.url}
-              // alt={post.author.account.username}
+              src={post.owner.avatar}
+              alt={post.owner.userName}
+              className="h-12 w-12 rounded-full object-cover border-2 border-white shadow-md ring-2 ring-gray-200"
             />
-            <h3 className="post-card-username px-2  font-semibold">{`${post?.author?.account?.username}`}</h3>
+            <h3 className="post-card-username px-2 pt-2 font-semibold">{`${post?.owner?.userName}`}</h3>
           </div>
           <div className=" post-card-options ">
             <MoreOutlinedIcon
@@ -53,7 +61,7 @@ useEffect(() => {
         <div className="post-image mt-2 rounded-lg overflow-hidden">
           <Carousel className="w-full" setApi={setApi}>
             <CarouselContent>
-              {post.images.map((image) => (
+              {post.asset.map((image) => (
                 <CarouselItem key={image._id}>
                   <img
                     src={image.url}
@@ -70,7 +78,7 @@ useEffect(() => {
 
           {/* Dots */}
           <div className="mt-4 flex justify-center gap-2">
-            {post.images.map((_, index) => (
+            {post.asset.map((_, index) => (
               <button
                 key={index}
                 onClick={() => api?.scrollTo(index)}
@@ -82,12 +90,10 @@ useEffect(() => {
           </div>
         </div>
 
-
-        
         <div className="mt-2 text-sm">
           <p className={expanded ? "" : "line-clamp-2"}>
-            {post.content}
-            {post.tags.map((tag) => (
+            {post.captions}
+            {post.hashtags.map((tag) => (
               <span key={tag} className="font-semibold text-blue-600">
                 #{tag}{" "}
               </span>

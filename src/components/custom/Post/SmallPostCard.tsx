@@ -33,7 +33,7 @@ const SmallPostCard = ({ post, id }: { post: Post; id: number }) => {
         >
           <img
             className="w-full h-full object-cover"
-            src={post.images[0].url || myPic}
+            src={post.asset[0].url || myPic}
             alt={`Image ${id + 1}`}
           />
           <div className="absolute inset-2   bg-black/50   opacity-0   group-hover:opacity-100 transition-all  duration-300 flex items-center justify-center gap-6 text-white">

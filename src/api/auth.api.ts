@@ -13,7 +13,7 @@ import { setAccessToken, setRefreshToken } from "@/utils/localStorage";
 // }
 
 export interface LoginUserInternface {
-  username: string;
+  userName: string;
   password: string;
 }
 

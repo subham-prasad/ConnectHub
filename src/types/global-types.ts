@@ -8,7 +8,13 @@ export type ApiResponse<T> = {
 
 export interface image {
   url: string;
-  localPath: string;
+  // localPath: string;
+  _id: string;
+}
+
+export interface asset {
+  url: string;
+  // localPath: string;
   _id: string;
 }
 
@@ -16,7 +22,7 @@ export interface image {
 
 export interface account {
   _id: string;
-  avatar: image;
+  avatar: string;
   username: string;
   email: string;
   isEmailVerified: boolean

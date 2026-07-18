@@ -39,8 +39,6 @@ const NewPosts = () => {
     setImages((prev) => [...prev, ...uploadedImages]);
 
     e.target.value = "";
-
-
   };
 
   const removeImage = (index: number) => {
@@ -73,10 +71,10 @@ const NewPosts = () => {
     }
   };
   const handlePost = async () => {
- if (!content.trim() && images.length === 0) {
-   toast.error("Please enter a caption or upload at least one image.");
-   return;
- }
+    if (!content.trim() && images.length === 0) {
+      toast.error("Please enter a caption or upload at least one image.");
+      return;
+    }
     try {
       setIsPosting(true);
       const response = await createPost({
@@ -97,8 +95,7 @@ const NewPosts = () => {
       setTagInput("");
       setTags([]);
 
-
-        navigate("/"); 
+      navigate("/");
     } catch (error) {
       toast.error("Failed to upload post.");
       console.error(error);

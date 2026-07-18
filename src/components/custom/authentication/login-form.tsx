@@ -38,7 +38,6 @@ export default function LoginPage() {
     try {
       const response = await loginUser({
         userName: data.identifier,
-        email: data.identifier,
         password: data.password,
       });
 
@@ -69,7 +68,7 @@ export default function LoginPage() {
             <Field>
               <FieldLabel htmlFor="userName">
                 {" "}
-                Email / Username / Mobile
+                Email / Username 
               </FieldLabel>
 
               <Input

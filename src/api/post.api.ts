@@ -14,7 +14,7 @@ export const getAllPostsData = async (
 ) => {
   try {
     const response = await Axios.get<ApiResponse<PostApiResponse>>(
-      "/social-media/posts",
+      "/post/get-all-posts",
       {
         params: {
           page,
@@ -37,20 +37,20 @@ export const createPost = async ({
 }: CreatePostPayload) => {
   const formData = new FormData();
 
-  formData.append("content", content);
+  formData.append("captions", content);
 
   images.forEach((image) => {
-    formData.append("images", image.file);
+    formData.append("photos", image.file);
   });
 
   tags.forEach((tag, index) => {
-    formData.append(`tags[${index}]`, tag);
+    formData.append(`hashtags[${index}]`, tag);
   });
 
 
   try {
     const response = await Axios.post<ApiResponse<PostApiResponse>>(
-      "/social-media/posts",
+      "/post/create-post",
       formData,
       {
         headers: {
@@ -71,7 +71,7 @@ export const createPost = async ({
 export const getMyPosts = async () => {
   try {
     const response = await Axios.get<ApiResponse<PostApiResponse>>(
-      "social-media/posts/get/my",
+      "/post/get-my-posts",
       {
         params: {
           page: 1,
